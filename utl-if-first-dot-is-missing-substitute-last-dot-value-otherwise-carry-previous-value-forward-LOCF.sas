@@ -80,25 +80,25 @@ Obs    AMOUNT    COUNTRY      DATE
                                                                                                                                         
 ;                                                                                                                                       
                                                                                                                                         
-data want(drop=amount holdoff lstamt rename=savAmt=amount);                                                                             
+data want(drop=amount lstamt rename=savAmt=amount);                                                                                     
   retain lstAmt savAmt;                                                                                                                 
   do until (last.country);                                                                                                              
     set have ;                                                                                                                          
     by country notsorted;                                                                                                               
-    if first.country and missing(amount) then holdoff=1;                                                                                
-    else if not missing(amount) then savAmt=amount;                                                                                     
     if last.country then lstAmt=amount;                                                                                                 
   end;                                                                                                                                  
   do until (last.country);                                                                                                              
     set have ;                                                                                                                          
     by country notsorted;                                                                                                               
-    if first.country and holdoff then savAmt=lstAmt;                                                                                    
+    if first.country and missing(amount) then savAmt=lstAmt;                                                                            
     else if not missing(amount) then savAmt=amount;                                                                                     
     output;                                                                                                                             
   end;                                                                                                                                  
-  holdoff=0;                                                                                                                            
 run;quit;                                                                                                                               
                                                                                                                                         
+                                                                                                                                        
+                                                                                                                                        
+                                                  
                                                                                                                                         
                                                                                                                                         
                                                                                                                                         
